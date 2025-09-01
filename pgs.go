@@ -28,13 +28,11 @@ type ecSignature struct{ R, S *big.Int }
 var supportedCurves = map[elliptic.Curve]string{
 	elliptic.P256(): "ECCP256",
 	elliptic.P384(): "ECCP384",
-	elliptic.P521(): "ECCP521",
 }
 
 var curveToHash = map[elliptic.Curve]crypto.Hash{
 	elliptic.P256(): crypto.SHA256,
 	elliptic.P384(): crypto.SHA384,
-	elliptic.P521(): crypto.SHA512,
 }
 
 func main() {
@@ -154,9 +152,6 @@ func signData(pin string, data []byte) (string, string, error) {
 		digest = h[:]
 	case crypto.SHA384:
 		h := sha512.Sum384(data)
-		digest = h[:]
-	case crypto.SHA512:
-		h := sha512.Sum512(data)
 		digest = h[:]
 	default:
 		return "", "", fmt.Errorf("unsupported hash algorithm for curve")
@@ -279,9 +274,6 @@ func verifyData(data []byte) error {
 	case crypto.SHA384:
 		h := sha512.Sum384([]byte(original))
 		digest = h[:]
-	case crypto.SHA512:
-		h := sha512.Sum512([]byte(original))
-		digest = h[:]
 	default:
 		return fmt.Errorf("unsupported hash algorithm for curve")
 	}
@@ -394,8 +386,6 @@ func analyzeSignature(data []byte, certFilename string) error {
 			fmt.Printf("Data SHA-256 hash: %x\n", sha256.Sum256([]byte(original)))
 		case crypto.SHA384:
 			fmt.Printf("Data SHA-384 hash: %x\n", sha512.Sum384([]byte(original)))
-		case crypto.SHA512:
-			fmt.Printf("Data SHA-512 hash: %x\n", sha512.Sum512([]byte(original)))
 		}
 	} else {
 		fmt.Println("❌ WARNING: Signature is NOT VALID!")
