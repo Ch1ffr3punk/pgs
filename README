@@ -18,6 +18,11 @@ Examples:
 What does pgs stand for? It is a homage to pgp and means
 pretty good signer, signature, etc. you name it. :-)
 
+Why does pgs uses only ECCP? Because old YubiKeys with old
+firmware support them as well and RSA signatures are too
+big for my taste.
+
+
 
 
 
