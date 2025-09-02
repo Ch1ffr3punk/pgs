@@ -1,7 +1,7 @@
 pgs - An easy to use CLI tool to sign email or Usenet messages with your YubiKey.
 
-Simply create an ECCP256 or ECCP384 key on your YubiKey with
-Yubico Authenticator in slot 9c and you are all set. :-)
+Simply create an ECCP256, ECCP384 or Ed25519 key on your YubiKey
+with Yubico Authenticator in slot 9c and you are all set. :-)
 
 Usage: pgs [OPTIONS]
 
@@ -9,11 +9,14 @@ Options:
   -s -p PIN          Sign message using the provided PIN
   -v                 Verify a signature
   -a -c certificate  Analyze signed message with certificate file
+  -d                 Use detached signature mode
 
 Examples:
   pgs -s -p 12345678 < msg.txt > signed.txt
   pgs -v < signed.txt
   pgs -a < signed.txt -c cert.pem
+  pgs -s -p 12345678 -d signature.sig < binary_file
+  pgs -v -d signature.sig < binary_file
 
 What does pgs stand for? It is a homage to pgp and means
 pretty good signer, signature, etc. you name it. :-)
@@ -21,6 +24,7 @@ pretty good signer, signature, etc. you name it. :-)
 Why does pgs uses only ECCP? Because old YubiKeys with old
 firmware support them as well and RSA signatures are too
 big for my taste.
+
 
 
 
